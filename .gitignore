@@ -1,0 +1,9 @@
+beawer-venv/
+*.log
+*.pot
+*.pyc
+__pycache__/
+db.sqlite3
+db.sqlite3-journal
+.env
+.venv
