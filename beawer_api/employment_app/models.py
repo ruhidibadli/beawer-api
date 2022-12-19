@@ -30,6 +30,9 @@ class Advertisement(models.Model):
     country = models.CharField(max_length=255)
     enabled = models.BooleanField(default=True)
     
+    def __str__(self) -> str:
+        return self.title
+
 
 class AppliedJobs(models.Model):
     applicant = models.ForeignKey(Applicant, on_delete=models.CASCADE)
@@ -37,3 +40,6 @@ class AppliedJobs(models.Model):
     applicated_date = models.DateTimeField(default=timezone.now)
     status = models.CharField(choices=APPLIEMENT_STATUS, max_length=25)
     enabled = models.BooleanField(default=True)
+
+    def __str__(self) -> str:
+        return f'{self.applicant.user.username} - {self.job.title}'
