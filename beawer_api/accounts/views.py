@@ -1,5 +1,4 @@
 from rest_framework.response import Response
-from rest_framework.parsers import JSONParser
 from rest_framework import status, permissions
 from .models import Employer, Applicant, Category
 from django.contrib.auth.models import User
@@ -33,12 +32,11 @@ class LoginAPI(APIView):
                 is_user = authenticate(username=user.username, password=password)
 
                 if is_user:
-                    print(user)
+                    return Response({'data':{'user_id':user.id}}, status=status.HTTP_200_OK)
                 else:
                     return Response({'error':'The password is wrong!'}, status=status.HTTP_400_BAD_REQUEST)
                 
 
-                return Response({'message':'OK'}, status=status.HTTP_200_OK)
 
             else:
                 return Response({'error':'Entered data is not valid!'}, status=status.HTTP_400_BAD_REQUEST)
