@@ -12,6 +12,7 @@ JOB_TYPES = [
 ]
 
 APPLIEMENT_STATUS = [
+    ('Waiting', 'Waiting'),
     ('Viewed', 'Viewed'),
     ('Interview Phase', 'Interview Phase'),
     ('Accepted', 'Accepted'),
@@ -28,6 +29,7 @@ class Advertisement(models.Model):
     salary = models.IntegerField()
     job_type = models.CharField(choices=JOB_TYPES, max_length=50)
     country = models.CharField(max_length=255)
+    date_published = models.DateTimeField(default=timezone.now)
     enabled = models.BooleanField(default=True)
     
     def __str__(self) -> str:
@@ -38,7 +40,7 @@ class AppliedJobs(models.Model):
     applicant = models.ForeignKey(Applicant, on_delete=models.CASCADE)
     job = models.ForeignKey(Advertisement, on_delete=models.CASCADE)
     applicated_date = models.DateTimeField(default=timezone.now)
-    status = models.CharField(choices=APPLIEMENT_STATUS, max_length=25)
+    status = models.CharField(choices=APPLIEMENT_STATUS, max_length=25, default='Waiting')
     enabled = models.BooleanField(default=True)
 
     def __str__(self) -> str:
