@@ -51,3 +51,9 @@ class SignUpSerializer(serializers.Serializer):
 
         return user
 
+class UserSerializer(serializers.ModelSerializer):
+    last_login = serializers.DateTimeField(format="%b, %d, %Y, %I:%M %p")
+    date_joined = serializers.DateTimeField(format="%b, %d, %Y, %I:%M %p")
+    class Meta:
+        model = User
+        fields = ['id', 'last_login', 'username', 'first_name', 'last_name', 'email', 'date_joined']

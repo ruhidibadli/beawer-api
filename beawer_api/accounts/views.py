@@ -3,7 +3,7 @@ from rest_framework import status, permissions
 from .models import Employer, Applicant, Category
 from django.contrib.auth.models import User
 from rest_framework.views import APIView
-from .serializers import LoginSerializer, SignUpSerializer
+from .serializers import LoginSerializer, SignUpSerializer, UserSerializer
 from django.contrib.auth import authenticate
 from django.core.exceptions import ObjectDoesNotExist
 import re
@@ -103,24 +103,26 @@ class SignUpAPI(APIView):
 class ProfileAPI(APIView):
     permission_classes = [permissions.AllowAny]
     
-    def get(self, request, id):
+    def get(self, request, user_id):
         try:
-            user = User.objects.get(id=id)
+            user = User.objects.get(id=user_id)
+
 
             try:
                 employer = Employer.objects.get(user=user)
             except ObjectDoesNotExist:
-                pass
+                employer = None
 
             try:
                 applicant = Applicant.objects.get(user=user)
             except ObjectDoesNotExist:
-                pass
+                applicant = None
 
             if employer:
                 pass
             elif applicant:
-                pass
+                user_serialized = UserSerializer(user).data
+                return Response({'data':user_serialized}, status=status.HTTP_200_OK)
             else:
                 return Response({'error':'User doesn`t have profile!'}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
