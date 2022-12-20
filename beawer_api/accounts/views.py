@@ -57,8 +57,8 @@ class SignUpAPI(APIView):
             country = serializer.validated_data.get('country')
             email = serializer.validated_data.get('email').lower()
             username = serializer.validated_data.get('username').lower()
+            full_name = serializer.validated_data.get('full_name')
             password = serializer.validated_data.get('password')
-            password2 = serializer.validated_data.get('password2')
             interested_with = serializer.validated_data.get('interested_with')
             user_type = serializer.validated_data.get('user_type')
             title = serializer.validated_data.get('title')
@@ -74,8 +74,6 @@ class SignUpAPI(APIView):
                 data = {'message':'Email already exists. We already have a registered user with this email address. You can log in or if you forgot your password, you can click "Forgot password" button to reset your password'}
                 return Response({'error':data,"success":False}, status=status.HTTP_400_BAD_REQUEST)
 
-            if password != password2:
-                return Response({'error':{"message": "Password fields didn't match."},"success":False}, status=status.HTTP_400_BAD_REQUEST)
             if not re.findall('[()[\]{}|\\`~!@#$%^&*_\-+=;:\'",<>./?]', password):
                 return Response({'error':{"message": "The password must contain at least 1 symbol: " + "()[]{}|\`~!@#$%^&*_-+=;:'\",<>./?"},"success":False}, status=status.HTTP_400_BAD_REQUEST)
             if not re.findall('[a-z]', password):

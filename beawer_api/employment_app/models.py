@@ -20,6 +20,13 @@ APPLIEMENT_STATUS = [
 
 ]
 
+JOB_POSITIONS = [
+    ('Junior', 'Junior'),
+    ('Middle', 'Middle'),
+    ('Senior', 'Senior'),
+    ('Graduated', 'Graduated'),
+    ('Experienced', 'Experienced'),
+]
 
 
 class Advertisement(models.Model):
@@ -31,7 +38,9 @@ class Advertisement(models.Model):
     country = models.CharField(max_length=255)
     date_published = models.DateTimeField(default=timezone.now)
     enabled = models.BooleanField(default=True)
-    
+    position = models.CharField(max_length=50, choices=JOB_POSITIONS, default='Junior')
+    description = models.TextField(null=True, blank=True)
+
     def __str__(self) -> str:
         return self.title
 

@@ -21,12 +21,9 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class SignUpSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=150, required=False)
-    first_name = serializers.CharField(max_length=30)
-    last_name = serializers.CharField(max_length=30)
+    full_name = serializers.CharField(max_length=100, required=False)
     email = serializers.CharField(max_length=75)
-    country = serializers.CharField(max_length=150, required=False)
     password = serializers.CharField(max_length=50, required=True)
-    password2 = serializers.CharField(max_length=50, required=True)
     interested_with = CategorySerializer(many=True, required=False)
     user_type = serializers.ChoiceField(choices=USER_TYPES)
     title = serializers.CharField(required=False)
@@ -34,15 +31,13 @@ class SignUpSerializer(serializers.Serializer):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password', 'password2', 'first_name', 'last_name', 'country', 'interested_with', 'user_types', 'title', 'description')
+        fields = ('username', 'email', 'password', 'first_name', 'interested_with', 'user_types', 'title', 'description')
 
 
     def create(self, validated_data):
         user = User.objects.create(
             username=validated_data['username'],
             email=validated_data['email'],
-            first_name=validated_data['first_name'],
-            last_name=validated_data['last_name'],
             is_active=False
         )
 
