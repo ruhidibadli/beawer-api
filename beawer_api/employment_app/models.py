@@ -7,8 +7,8 @@ JOB_TYPES = [
     ('FULL TIME', 'FULL TIME'),
     ('PART TIME', 'PART TIME'),
     ('INTERN', 'INTERN'),
-    ('SEASONAL', 'SEASONAL'),
-    ('CONTRACT', 'CONTRACT'),
+    ('REMOTE', 'REMOTE'),
+    ('HYBRID', 'HYBRID'),
 ]
 
 APPLIEMENT_STATUS = [
