@@ -198,7 +198,14 @@ class SearchJobsAPI(APIView):
             category_id = serializer.validated_data.get('category_id')
             job_type = serializer.validated_data.get('job_type')
 
-            jobs = Advertisement.objects.filter(category__id=category_id, job_type=job_type)
+            if category_id and job_type:
+                jobs = Advertisement.objects.filter(category__id=category_id, job_type__iexact=job_type, enabled=True)
+            elif category_id and job_type == None:
+                jobs = Advertisement.objects.filter(category__id=category_id, enabled=True)
+            elif category_id == None and job_type:
+                jobs = Advertisement.objects.filter(job_type__iexact=job_type, enabled=True)
+            else:
+                jobs = Advertisement.objects.filter(enabled=True)
 
             jobs_serialized = AdvertisementSerializer(jobs, many=True).data
 

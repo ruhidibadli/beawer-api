@@ -152,8 +152,8 @@ class CheckEmailAPI(APIView):
             try:
                 user = User.objects.get(email=email)
                 user_serialized = UserSerializer(user).data
-                return Response({'data':user_serialized}, status=status.HTTP_200_OK)
+                return Response({'data':user_serialized, 'error':None}, status=status.HTTP_200_OK)
             except ObjectDoesNotExist:
-                return Response({'error':'User with given email does not exist!'}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({'data':None, 'error':'User with given email does not exist!'}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response({'error':'Data is not valid!'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'data':None, 'error':'Data is not valid!'}, status=status.HTTP_400_BAD_REQUEST)
