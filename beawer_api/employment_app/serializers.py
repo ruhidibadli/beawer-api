@@ -6,7 +6,7 @@ from .models import Advertisement, AppliedJobs
 class AdvertisementSerializer(serializers.ModelSerializer):
     employer = serializers.StringRelatedField()
     category = serializers.StringRelatedField()
-    date_published = serializers.DateTimeField(format="%b, %d, %Y, %I:%M %p")
+    date_published = serializers.DateTimeField(format="%d.%m.%Y")
     class Meta:
         model = Advertisement
         fields = '__all__'
@@ -15,7 +15,7 @@ class AdvertisementSerializer(serializers.ModelSerializer):
 class AppliedJobSerializer(serializers.ModelSerializer):
     job = AdvertisementSerializer(many=False, read_only=True)
     applicant = serializers.StringRelatedField()
-    applicated_date = serializers.DateTimeField(format="%b, %d, %Y, %I:%M %p")
+    applicated_date = serializers.DateTimeField(format="%d.%m.%Y")
     class Meta:
         model = AppliedJobs
         fields = '__all__'
@@ -34,4 +34,4 @@ class CreateAdvertisementSerializer(serializers.ModelSerializer):
 class ApplyJobSerializer(serializers.ModelSerializer):
     class Meta:
         model = AppliedJobs
-        exclude = ['applicated_date', 'enabled']
+        exclude = ['applicated_date', 'enabled', 'status']

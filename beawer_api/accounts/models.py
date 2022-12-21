@@ -14,7 +14,7 @@ class Employer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField(null=True, blank=True, upload_to='static/img/')
     full_name = models.CharField(null=True, blank=True, max_length=100)
-    birth_date = models.DateTimeField(default=timezone.now)
+    birth_date = models.DateTimeField(default=timezone.now, null=True, blank=True)
 
     def __str__(self) -> str:
         return self.user.username
@@ -27,7 +27,7 @@ class Applicant(models.Model):
     image = models.ImageField(null=True, blank=True, upload_to='static/img/')
     description = models.TextField(null=True, blank=True)
     full_name = models.CharField(null=True, blank=True, max_length=100)
-    birth_date = models.DateTimeField(default=timezone.now)
+    birth_date = models.DateTimeField(default=timezone.now, null=True, blank=True)
 
     def __str__(self) -> str:
         return self.user.username
