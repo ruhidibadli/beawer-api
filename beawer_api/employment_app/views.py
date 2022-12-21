@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework import status, permissions
 from rest_framework.response import Response
 from .models import Advertisement, AppliedJobs
-from .serializers import AdvertisementSerializer, AppliedJobSerializer, CreateAdvertisementSerializer, ApplyJobSerializer
+from .serializers import AdvertisementSerializer, AppliedJobSerializer, CreateAdvertisementSerializer, ApplyJobSerializer, SearchJobSerializer
 from accounts.serializers import CategorySerializer
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
@@ -189,7 +189,12 @@ class UpdateJobAPI(APIView):
 
 class SearchJobsAPI(APIView):
     permission_classes = [permissions.AllowAny]
-
+    serializer_class = SearchJobSerializer
 
     def post(self, request):
-        pass
+        serializer = SearchJobSerializer(data=request.data)
+
+        if serializer.is_valid():
+            pass
+        else:
+            return Response({'error':'Data is not valid!'}, status=status.HTTP_400_BAD_REQUEST)

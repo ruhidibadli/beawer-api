@@ -35,3 +35,8 @@ class ApplyJobSerializer(serializers.ModelSerializer):
     class Meta:
         model = AppliedJobs
         exclude = ['applicated_date', 'enabled', 'status']
+
+
+class SearchJobSerializer(serializers.Serializer):
+    category_id = serializers.IntegerField(required=False)
+    job_type = serializers.CharField(required=False)
