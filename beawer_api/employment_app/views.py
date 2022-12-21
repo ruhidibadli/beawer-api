@@ -89,9 +89,8 @@ class CreateAdvertisementAPI(APIView):
             except Exception as e:
                 print(e)
                 return Response({'error':'Something went wrong!'}, status=status.HTTP_400_BAD_REQUEST)
-
-
         else:
+            print(serializer.errors)
             return Response({'error':'Data is not valid!'}, status=status.HTTP_400_BAD_REQUEST)
 
 
