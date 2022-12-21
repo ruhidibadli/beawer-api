@@ -10,4 +10,5 @@ urlpatterns = [
     path('job_detail/<int:job_id>/', views.JobDetailAPI.as_view(), name='job_detail'),
     path('my_jobs/<int:user_id>/', views.ShowMyJobsAPI.as_view(), name='my_jobs'),
     path('update_job/<int:pk>/', views.UpdateJobAPI.as_view(), name='update_job'),
+    path('search_jobs/', views.SearchJobsAPI.as_view(), name='search_jobs'),
 ]

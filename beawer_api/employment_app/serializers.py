@@ -2,6 +2,13 @@ from rest_framework import serializers
 from .models import Advertisement, AppliedJobs
 from accounts.serializers import EmployerSerializer, CategorySerializer
 
+JOB_TYPES = [
+    ('Full Time', 'Full Time'),
+    ('Part Time', 'Part Time'),
+    ('Intern', 'Intern'),
+    ('Remote', 'Remote'),
+    ('Hybrid', 'Hybrid'),
+]
 
 class AdvertisementSerializer(serializers.ModelSerializer):
     employer = EmployerSerializer(read_only=True)
@@ -39,4 +46,4 @@ class ApplyJobSerializer(serializers.ModelSerializer):
 
 class SearchJobSerializer(serializers.Serializer):
     category_id = serializers.IntegerField(required=False)
-    job_type = serializers.CharField(required=False)
+    job_type = serializers.ChoiceField(required=False, choices=JOB_TYPES)

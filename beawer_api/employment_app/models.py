@@ -4,11 +4,11 @@ from django.utils import timezone
 # Create your models here.
 
 JOB_TYPES = [
-    ('FULL TIME', 'FULL TIME'),
-    ('PART TIME', 'PART TIME'),
-    ('INTERN', 'INTERN'),
-    ('REMOTE', 'REMOTE'),
-    ('HYBRID', 'HYBRID'),
+    ('Full Time', 'Full Time'),
+    ('Part Time', 'Part Time'),
+    ('Intern', 'Intern'),
+    ('Remote', 'Remote'),
+    ('Hybrid', 'Hybrid'),
 ]
 
 APPLIEMENT_STATUS = [
@@ -34,7 +34,7 @@ class Advertisement(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     salary = models.IntegerField()
-    job_type = models.CharField(choices=JOB_TYPES, max_length=50)
+    job_type = models.CharField(choices=JOB_TYPES, max_length=50, default='Full Time')
     country = models.CharField(max_length=255)
     date_published = models.DateTimeField(default=timezone.now)
     enabled = models.BooleanField(default=True)

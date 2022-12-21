@@ -195,6 +195,13 @@ class SearchJobsAPI(APIView):
         serializer = SearchJobSerializer(data=request.data)
 
         if serializer.is_valid():
-            pass
+            category_id = serializer.validated_data.get('category_id')
+            job_type = serializer.validated_data.get('job_type')
+
+            jobs = Advertisement.objects.filter(category__id=category_id, job_type=job_type)
+
+            jobs_serialized = AdvertisementSerializer(jobs, many=True).data
+
+            return Response({'data':jobs_serialized}, status=status.HTTP_200_OK)
         else:
             return Response({'error':'Data is not valid!'}, status=status.HTTP_400_BAD_REQUEST)
