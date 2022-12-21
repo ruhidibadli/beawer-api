@@ -185,3 +185,11 @@ class UpdateJobAPI(APIView):
             return Response({'error':'Something went wrong!'}, status=status.HTTP_400_BAD_REQUEST)
 
 
+
+
+class SearchJobsAPI(APIView):
+    permission_classes = [permissions.AllowAny]
+
+
+    def post(self, request):
+        pass

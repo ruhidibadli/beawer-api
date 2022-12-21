@@ -1,11 +1,11 @@
 from rest_framework import serializers
 from .models import Advertisement, AppliedJobs
-
+from accounts.serializers import EmployerSerializer, CategorySerializer
 
 
 class AdvertisementSerializer(serializers.ModelSerializer):
-    employer = serializers.StringRelatedField()
-    category = serializers.StringRelatedField()
+    employer = EmployerSerializer(read_only=True)
+    category = CategorySerializer(read_only=True)
     date_published = serializers.DateTimeField(format="%d.%m.%Y")
     class Meta:
         model = Advertisement

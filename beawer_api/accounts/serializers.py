@@ -33,7 +33,7 @@ class SignUpSerializer(serializers.Serializer):
     user_type = serializers.ChoiceField(choices=USER_TYPES)
     title = serializers.CharField(required=False)
     description = serializers.CharField(required=False)
-    birth_date = serializers.DateTimeField(required=False, format="%d.%m.%Y")
+    birth_date = serializers.DateField(required=False, format="%d.%m.%Y")
 
     class Meta:
         model = User
@@ -67,7 +67,7 @@ class EmailSerializer(serializers.Serializer):
 
 class EmployerSerializer(serializers.ModelSerializer):
     birth_date = serializers.DateTimeField(format="%d.%m.%Y")
-    user = serializers.StringRelatedField()
+    user = UserSerializer(read_only=True)
     class Meta:
         model = Employer
         fields = '__all__'
