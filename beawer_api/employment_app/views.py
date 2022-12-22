@@ -190,24 +190,20 @@ class SearchJobsAPI(APIView):
     permission_classes = [permissions.AllowAny]
     serializer_class = SearchJobSerializer
 
-    def post(self, request):
-        serializer = SearchJobSerializer(data=request.data)
+    def get(self, request):
+        print(request.data)
+        category_id = request.GET.get('category_id')
+        job_type = request.GET.get('job_type')
 
-        if serializer.is_valid():
-            category_id = serializer.validated_data.get('category_id')
-            job_type = serializer.validated_data.get('job_type')
-
-            if category_id and job_type:
-                jobs = Advertisement.objects.filter(category__id=category_id, job_type__iexact=job_type, enabled=True)
-            elif category_id and job_type == None:
-                jobs = Advertisement.objects.filter(category__id=category_id, enabled=True)
-            elif category_id == None and job_type:
-                jobs = Advertisement.objects.filter(job_type__iexact=job_type, enabled=True)
-            else:
-                jobs = Advertisement.objects.filter(enabled=True)
-
-            jobs_serialized = AdvertisementSerializer(jobs, many=True).data
-
-            return Response({'data':jobs_serialized}, status=status.HTTP_200_OK)
+        if category_id and job_type:
+            jobs = Advertisement.objects.filter(category__id=category_id, job_type__iexact=job_type, enabled=True)
+        elif category_id and job_type == None:
+            jobs = Advertisement.objects.filter(category__id=category_id, enabled=True)
+        elif category_id == None and job_type:
+            jobs = Advertisement.objects.filter(job_type__iexact=job_type, enabled=True)
         else:
-            return Response({'error':'Data is not valid!'}, status=status.HTTP_400_BAD_REQUEST)
+            jobs = Advertisement.objects.filter(enabled=True)
+
+        jobs_serialized = AdvertisementSerializer(jobs, many=True).data
+
+        return Response({'data':jobs_serialized}, status=status.HTTP_200_OK)
