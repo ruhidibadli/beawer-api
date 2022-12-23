@@ -3,7 +3,7 @@ from rest_framework import status, permissions
 from .models import Employer, Applicant, Category
 from django.contrib.auth.models import User
 from rest_framework.views import APIView
-from .serializers import LoginSerializer, SignUpSerializer, UserSerializer, EmailSerializer, EmployerSerializer, ApplicantSerializer
+from .serializers import LoginSerializer, SignUpSerializer, UserSerializer, EmailSerializer, EmployerSerializer, ApplicantSerializer, UpdateProfileSerializer
 from django.contrib.auth import authenticate
 from django.core.exceptions import ObjectDoesNotExist
 import re
@@ -157,3 +157,39 @@ class CheckEmailAPI(APIView):
                 return Response({'data':None, 'error':'User with given email does not exist!'}, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response({'data':None, 'error':'Data is not valid!'}, status=status.HTTP_400_BAD_REQUEST)
+
+    
+
+class UpdateUserProfileAPI(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def put(self, request, user_id):
+        serializer = UpdateProfileSerializer(data=request.data)
+
+        if serializer.is_valid():
+            full_name = serializer.validated_data.get('full_name')
+            username = serializer.validated_data.get('username')
+            email = serializer.validated_data.get('email')
+            title = serializer.validated_data.get('title')
+            description = serializer.validated_data.get('description')
+
+            try:
+                user = User.objects.get(id=user_id)
+            except ObjectDoesNotExist:
+                return Response({'error':'User with given id not found!'}, status=status.HTTP_200_OK)
+
+            applicant = user.applicant_set.get()
+            
+            user.username = username
+            user.email = email
+            applicant.title = title
+            applicant.full_name = full_name
+            applicant.description = description
+
+            user.save()
+            applicant.save()
+
+            return Response({'data':'Ok'}, status=status.HTTP_200_OK)
+            
+        else:
+            return Response({'error':'Data is not valid!'}, status=status.HTTP_200_OK)

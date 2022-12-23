@@ -1,9 +1,9 @@
-from accounts.models import Category
+from accounts.models import Category, Applicant
 from rest_framework.views import APIView
 from rest_framework import status, permissions
 from rest_framework.response import Response
 from .models import Advertisement, AppliedJobs
-from .serializers import AdvertisementSerializer, AppliedJobSerializer, CreateAdvertisementSerializer, ApplyJobSerializer, SearchJobSerializer
+from .serializers import AdvertisementSerializer, AppliedJobSerializer, CreateAdvertisementSerializer, ApplyJobSerializer, SearchJobSerializer, ApplyNewJobSerializer
 from accounts.serializers import CategorySerializer
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
@@ -100,15 +100,16 @@ class ApplyJobAPI(APIView):
     serializer_class = ApplyJobSerializer
 
     def post(self, request):
-        serializer =ApplyJobSerializer(data=request.data)
+        serializer =ApplyNewJobSerializer(data=request.data)
         
         if serializer.is_valid():
             try:
                 applicant = serializer.validated_data.get('applicant')
                 job = serializer.validated_data.get('job')
 
+                applicant_user = Applicant.objects.get(user__id=applicant)
 
-                created_apply = AppliedJobs.objects.create(applicant=applicant, job=job)
+                created_apply = AppliedJobs.objects.create(applicant=applicant_user, job=job)
 
                 created_apply_serialized = AppliedJobSerializer(created_apply).data
 

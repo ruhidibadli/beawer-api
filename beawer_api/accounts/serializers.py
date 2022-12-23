@@ -80,3 +80,11 @@ class ApplicantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Applicant
         fields = '__all__'
+
+
+class UpdateProfileSerializer(serializers.Serializer):
+    full_name = serializers.CharField()
+    username = serializers.CharField()
+    email = serializers.EmailField()
+    title = serializers.CharField()
+    description = serializers.CharField()

@@ -44,6 +44,11 @@ class ApplyJobSerializer(serializers.ModelSerializer):
         exclude = ['applicated_date', 'enabled', 'status']
 
 
+class ApplyNewJobSerializer(serializers.Serializer):
+    applicant = serializers.IntegerField()
+    job = serializers.IntegerField()
+
+
 class SearchJobSerializer(serializers.Serializer):
     category_id = serializers.IntegerField(required=False)
     job_type = serializers.ChoiceField(required=False, choices=JOB_TYPES)
