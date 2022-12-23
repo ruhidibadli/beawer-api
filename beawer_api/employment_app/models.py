@@ -4,11 +4,11 @@ from django.utils import timezone
 # Create your models here.
 
 JOB_TYPES = [
-    ('Full Time', 'Full Time'),
-    ('Part Time', 'Part Time'),
-    ('Intern', 'Intern'),
-    ('Remote', 'Remote'),
-    ('Hybrid', 'Hybrid'),
+    ('Tam Zamanlı', 'Tam Zamanlı'),
+    ('Yarı Zamanlı', 'Yarı Zamanlı'),
+    ('Stajer', 'Stajer'),
+    ('Uzaktan', 'Uzaktan'),
+    ('Hibrit', 'Hibrit'),
 ]
 
 APPLIEMENT_STATUS = [
@@ -21,11 +21,11 @@ APPLIEMENT_STATUS = [
 ]
 
 JOB_POSITIONS = [
-    ('Junior', 'Junior'),
+    ('Çaylak', 'Çaylak'),
     ('Middle', 'Middle'),
-    ('Senior', 'Senior'),
-    ('Graduated', 'Graduated'),
-    ('Experienced', 'Experienced'),
+    ('Kıdemli', 'Kıdemli'),
+    ('Mezun', 'Mezun'),
+    ('Tecrübeli', 'Tecrübeli'),
 ]
 
 
