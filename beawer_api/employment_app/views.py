@@ -54,7 +54,7 @@ class ReturnAppliedJobsAPI(APIView):
         for job in applied_jobs:
             applied_jobs_serialized.append(AppliedJobSerializer(job).data)
             try:
-                applied_jobs_serialized[temp].update({'job_image':job.job.employer.image.url})
+                applied_jobs_serialized[temp].update({'job_image':job.job.employer.image})
             except:
                 pass
             temp += 1
@@ -85,7 +85,7 @@ class CreateAdvertisementAPI(APIView):
 
                 created_job_serialized = AdvertisementSerializer(created_job).data
 
-                return Response({'data':created_job_serialized, 'company_image':created_job.employer.image.url}, status=status.HTTP_200_OK)
+                return Response({'data':created_job_serialized, 'company_image':created_job.employer.image}, status=status.HTTP_200_OK)
             except Exception as e:
                 print(e)
                 return Response({'error':'Something went wrong!'}, status=status.HTTP_400_BAD_REQUEST)
@@ -112,7 +112,7 @@ class ApplyJobAPI(APIView):
 
                 created_apply_serialized = AppliedJobSerializer(created_apply).data
 
-                return Response({'data':created_apply_serialized, 'job_image':created_apply.job.employer.image.url}, status=status.HTTP_200_OK)
+                return Response({'data':created_apply_serialized, 'job_image':created_apply.job.employer.image}, status=status.HTTP_200_OK)
 
             except Exception as e:
                 print(e)
@@ -133,7 +133,7 @@ class JobDetailAPI(APIView):
 
             job_serialized = AdvertisementSerializer(job).data
 
-            return Response({'data':job_serialized, 'company_image':job.employer.image.url}, status=status.HTTP_200_OK)
+            return Response({'data':job_serialized, 'company_image':job.employer.image}, status=status.HTTP_200_OK)
 
         except Exception as e:
             print(e)

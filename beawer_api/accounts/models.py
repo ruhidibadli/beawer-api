@@ -12,7 +12,7 @@ class Category(models.Model):
 
 class Employer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    image = models.ImageField(null=True, blank=True, upload_to='static/img/')
+    image = models.CharField(max_length=150, blank=True, null=True)
     full_name = models.CharField(null=True, blank=True, max_length=100)
     birth_date = models.DateTimeField(default=timezone.now, null=True, blank=True)
 
@@ -24,7 +24,7 @@ class Applicant(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     interested_with = models.ManyToManyField(Category, null=True, blank=True)
     title = models.CharField(max_length=255)
-    image = models.ImageField(null=True, blank=True, upload_to='static/img/')
+    image = models.CharField(max_length=150, blank=True, null=True)
     description = models.TextField(null=True, blank=True)
     full_name = models.CharField(null=True, blank=True, max_length=100)
     birth_date = models.DateTimeField(default=timezone.now, null=True, blank=True)
